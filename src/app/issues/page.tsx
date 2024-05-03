@@ -1,5 +1,11 @@
-const page = () => {
-  return <div>Issues Page</div>;
+import { Button } from "@radix-ui/themes";
+
+const IssuesPage = () => {
+  return (
+    <div>
+      <Button>New Issue</Button>
+    </div>
+  );
 };
 
-export default page;
+export default IssuesPage;
