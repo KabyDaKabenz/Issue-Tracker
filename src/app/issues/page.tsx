@@ -1,12 +1,11 @@
 import { Table } from "@radix-ui/themes";
 import prisma from "../../../prisma/client";
 import IssueStatusBadge from "@/components/IssueStatusBadge";
-import delay from "delay";
 import IssuesToolbar from "./IssuesToolbar";
+import Link from "next/link";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
-  await delay(2000);
 
   return (
     <div>
@@ -25,20 +24,25 @@ const IssuesPage = async () => {
         </Table.Header>
         <Table.Body>
           {issues.map((issue) => (
-            <Table.Row key={issue.id}>
-              <Table.ColumnHeaderCell>
-                {issue.title}
-                <div className="block md:hidden">
+            <Link href={`/issues/${issue.id}`} legacyBehavior>
+              <Table.Row
+                key={issue.id}
+                className="hover:bg-gray-100 cursor-pointer"
+              >
+                <Table.ColumnHeaderCell>
+                  {issue.title}
+                  <div className="block md:hidden">
+                    <IssueStatusBadge status={issue.status} />
+                  </div>
+                </Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className="hidden md:table-cell">
                   <IssueStatusBadge status={issue.status} />
-                </div>
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status} />
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
-              </Table.ColumnHeaderCell>
-            </Table.Row>
+                </Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className="hidden md:table-cell">
+                  {issue.createdAt.toDateString()}
+                </Table.ColumnHeaderCell>
+              </Table.Row>
+            </Link>
           ))}
         </Table.Body>
       </Table.Root>
