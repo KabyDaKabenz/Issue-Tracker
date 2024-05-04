@@ -21,3 +21,16 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(newIssue, { status: 201 });
 }
+
+// export async function GET(request: Request) {
+//   const issues = await prisma.issue.findMany();
+
+//   if (!issues) {
+//     return NextResponse.json(
+//       { message: "Something went wrong" },
+//       { status: 400 }
+//     );
+//   }
+
+//   return NextResponse.json(issues, { status: 200 });
+// }
