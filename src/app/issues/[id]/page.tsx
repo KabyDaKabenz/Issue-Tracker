@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation";
-import prisma from "../../../../prisma/client";
-import { Card, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "@/components/IssueStatusBadge";
+import { Card, Heading, Text } from "@radix-ui/themes";
+import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import prisma from "../../../../prisma/client";
 
 interface IssueDetailProps {
   params: {
@@ -20,7 +20,7 @@ const IssueDetailPage = async ({ params }: IssueDetailProps) => {
   }
 
   return (
-    <div>
+    <>
       <Heading>{issue.title}</Heading>
       <div className="flex items-center gap-3 my-3">
         <IssueStatusBadge status={issue.status} />
@@ -29,7 +29,7 @@ const IssueDetailPage = async ({ params }: IssueDetailProps) => {
       <Card className="prose mt-4">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
-    </div>
+    </>
   );
 };
 
