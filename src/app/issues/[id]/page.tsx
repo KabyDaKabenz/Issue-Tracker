@@ -1,6 +1,6 @@
 import { Box, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import prisma from "../../../../prisma/client";
+import prisma from "@_prisma/client";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 
