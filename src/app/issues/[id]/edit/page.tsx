@@ -17,7 +17,7 @@ const EditIssuePage = async ({ params }: EditIssuePageProps) => {
     notFound();
   }
 
-  return <IssueForm />;
+  return <IssueForm issue={issue} />;
 };
 
 export default EditIssuePage;
