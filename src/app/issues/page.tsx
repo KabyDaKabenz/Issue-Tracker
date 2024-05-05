@@ -24,11 +24,8 @@ const IssuesPage = async () => {
         </Table.Header>
         <Table.Body>
           {issues.map((issue) => (
-            <Link href={`/issues/${issue.id}`} legacyBehavior>
-              <Table.Row
-                key={issue.id}
-                className="hover:bg-gray-100 cursor-pointer"
-              >
+            <Link key={issue.id} href={`/issues/${issue.id}`} legacyBehavior>
+              <Table.Row className="hover:bg-gray-100 cursor-pointer">
                 <Table.ColumnHeaderCell>
                   {issue.title}
                   <div className="block md:hidden">
