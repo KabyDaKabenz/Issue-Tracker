@@ -4,7 +4,7 @@ import { createIssueSchema } from "@/app/validationSchema";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout, TextField } from "@radix-ui/themes";
+import { Button, Callout, Heading, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import dynamic from "next/dynamic";
@@ -36,6 +36,8 @@ const NewIssuePage = () => {
 
   return (
     <div className="max-w-xl">
+      <Heading className="mb-5">Add New Issue</Heading>
+
       {error && (
         <Callout.Root color="red" className="mb-5">
           <Callout.Icon>
