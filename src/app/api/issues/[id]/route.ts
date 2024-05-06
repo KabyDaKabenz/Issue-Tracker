@@ -20,7 +20,7 @@ export async function PATCH(
   });
 
   if (!issue) {
-    return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
+    return NextResponse.json({ error: "Issue not found." }, { status: 404 });
   }
 
   const updatedIssue = await prisma.issue.update({
@@ -34,4 +34,23 @@ export async function PATCH(
   revalidatePath("/issues");
 
   return NextResponse.json(updatedIssue, { status: 200 });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const issueToDelete = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!issueToDelete) {
+    return NextResponse.json({ error: "Issue not found." }, { status: 404 });
+  }
+
+  const deletedIssue = await prisma.issue.delete({
+    where: { id: issueToDelete.id },
+  });
+
+  return NextResponse.json(deletedIssue, { status: 200 });
 }
