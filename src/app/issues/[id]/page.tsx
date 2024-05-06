@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import prisma from "@_prisma/client";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface IssueDetailProps {
   params: {
@@ -20,12 +21,13 @@ const IssueDetailPage = async ({ params }: IssueDetailProps) => {
   }
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="5">
-      <Box>
+    <Grid columns={{ initial: "1", sm: "5" }} gap="5">
+      <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
-      <Box>
+      <Box className="flex flex-col gap-4">
         <EditIssueButton issueId={issue.id} />
+        <DeleteIssueButton issueId={issue.id} />
       </Box>
     </Grid>
   );
