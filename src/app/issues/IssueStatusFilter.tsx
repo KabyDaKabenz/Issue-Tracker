@@ -33,15 +33,8 @@ const IssueStatusFilter = () => {
           : "all"
       }
       onValueChange={(status) => {
-        const params = new URLSearchParams();
-        if (status) params.append("status", status);
-        if (searchParams.get("orderBy")) {
-          params.append("orderBy", searchParams.get("orderBy")!);
-          const sort = searchParams.get("sort")
-            ? searchParams.get("sort")
-            : "asc";
-          params.append("sort", sort!);
-        }
+        const params = new URLSearchParams(searchParams);
+        if (status) params.set("status", status);
         const query = params.size ? "?" + params.toString() : "";
         router.push(`/issues${query}`);
       }}

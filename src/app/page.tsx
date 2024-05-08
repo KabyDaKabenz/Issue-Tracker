@@ -1,5 +1,15 @@
 import Pagination from "@/components/Pagination";
 
-export default function Home() {
-  return <Pagination itemCount={20} currentPage={3} pageSize={5} />;
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) {
+  return (
+    <Pagination
+      itemCount={20}
+      currentPage={parseInt(searchParams.page) || 1}
+      pageSize={5}
+    />
+  );
 }
