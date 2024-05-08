@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components";
 import { Table } from "@radix-ui/themes";
-import IssuesToolbar from "./IssuesToolbar";
+import IssuesToolbar from "./IssueToolbar";
 
 const LoadingIssuesPage = () => {
   const issues = Array.from(Array(5).keys());
