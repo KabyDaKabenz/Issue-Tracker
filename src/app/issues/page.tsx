@@ -4,12 +4,12 @@ import { Status, Issue } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
 import IssuesToolbar from "./IssuesToolbar";
-import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 
 const IssuesPage = async ({
   searchParams,
 }: {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; sort: string };
 }) => {
   const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
@@ -21,8 +21,20 @@ const IssuesPage = async ({
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined;
+
+  const sort = ["asc", "desc"].includes(searchParams.sort)
+    ? searchParams.sort
+    : "asc";
+
+  const orderBy = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: sort }
+    : undefined;
+
   const issues = await prisma.issue.findMany({
     where: { status },
+    orderBy,
   });
 
   return (
@@ -37,12 +49,18 @@ const IssuesPage = async ({
                 className={column.className}
               >
                 <Link
-                  href={{ query: { ...searchParams, orderBy: column.value } }}
+                  href={{
+                    query: {
+                      ...searchParams,
+                      orderBy: column.value,
+                      sort: searchParams.sort === "asc" ? "desc" : "asc",
+                    },
+                  }}
                 >
                   {column.label}
                 </Link>
                 {column.value === searchParams.orderBy && (
-                  <ArrowUpIcon className="inline" />
+                  <ArrowIcon sort={searchParams.sort} />
                 )}
               </Table.ColumnHeaderCell>
             ))}
@@ -70,6 +88,18 @@ const IssuesPage = async ({
         </Table.Body>
       </Table.Root>
     </div>
+  );
+};
+
+const ArrowIcon = ({ sort }: { sort: string }) => {
+  return (
+    <>
+      {sort === "desc" ? (
+        <ArrowDownIcon className="inline" />
+      ) : (
+        <ArrowUpIcon className="inline" />
+      )}
+    </>
   );
 };
 
