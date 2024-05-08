@@ -1,16 +1,31 @@
 import { IssueStatusBadge } from "@/components";
 import prisma from "@_prisma/client";
 import { Status, Issue } from "@prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Flex, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import IssuesToolbar from "./IssuesToolbar";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
+import Pagination from "@/components/Pagination";
 
 const IssuesPage = async ({
   searchParams,
 }: {
-  searchParams: { status: Status; orderBy: keyof Issue; sort: string };
+  searchParams: {
+    status: Status;
+    orderBy: keyof Issue;
+    sort: string;
+    page: string;
+  };
 }) => {
+  const validatePage = (page: string, pageCount: number): number => {
+    let validatedPage = parseInt(page);
+    if (!validatedPage || validatedPage <= 0 || validatedPage > pageCount) {
+      return 1;
+    }
+
+    return validatedPage;
+  };
+
   const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
     { label: "Status", value: "status", className: "hidden md:table-cell" },
@@ -22,6 +37,10 @@ const IssuesPage = async ({
     ? searchParams.status
     : undefined;
 
+  const where = { status };
+
+  const issueCount = await prisma.issue.count({ where });
+
   const sort = ["asc", "desc"].includes(searchParams.sort)
     ? searchParams.sort
     : "asc";
@@ -32,9 +51,15 @@ const IssuesPage = async ({
     ? { [searchParams.orderBy]: sort }
     : undefined;
 
+  const PAGE_SIZE = 10;
+  const pageCount = Math.ceil(issueCount / PAGE_SIZE);
+  let page = validatePage(searchParams.page, pageCount);
+
   const issues = await prisma.issue.findMany({
-    where: { status },
+    where,
     orderBy,
+    take: PAGE_SIZE,
+    skip: (page - 1) * PAGE_SIZE,
   });
 
   return (
@@ -87,6 +112,13 @@ const IssuesPage = async ({
           ))}
         </Table.Body>
       </Table.Root>
+      <Flex justify="center" mt="3">
+        <Pagination
+          pageSize={PAGE_SIZE}
+          itemCount={issueCount}
+          currentPage={page}
+        />
+      </Flex>
     </div>
   );
 };

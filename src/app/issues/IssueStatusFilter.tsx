@@ -35,6 +35,7 @@ const IssueStatusFilter = () => {
       onValueChange={(status) => {
         const params = new URLSearchParams(searchParams);
         if (status) params.set("status", status);
+        if (searchParams.get("page")) params.set("page", "1");
         const query = params.size ? "?" + params.toString() : "";
         router.push(`/issues${query}`);
       }}
