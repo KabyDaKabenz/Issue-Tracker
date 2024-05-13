@@ -11,9 +11,9 @@ interface IssueChartProps {
 
 const IssueChart = ({ open, inProgress, closed }: IssueChartProps) => {
   const data = [
-    { label: "Open", value: open },
-    { label: "In Progress", value: inProgress },
-    { label: "Closed", value: closed },
+    { label: "Open", value: open, fill: "var(--red-a11)" },
+    { label: "In Progress", value: inProgress, fill: "var(--violet-a11)" },
+    { label: "Closed", value: closed, fill: "var(--green-a11)" },
   ];
 
   return (
@@ -25,7 +25,8 @@ const IssueChart = ({ open, inProgress, closed }: IssueChartProps) => {
           <Bar
             dataKey="value"
             barSize={60}
-            style={{ fill: "var(--accent-9)" }}
+            fill="fill"
+            // style={{ fill: "var(--accent-9)" }}
           />
         </BarChart>
       </ResponsiveContainer>
