@@ -1,4 +1,5 @@
 import { IssueStatusBadge } from "@/components";
+import NoIssuesCard from "@/components/NoIssuesCard";
 import { Issue, Status } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
@@ -17,6 +18,8 @@ interface IssueTableProps {
 }
 
 const IssueTable = ({ issues, searchParams }: IssueTableProps) => {
+  if (issues.length === 0) return <NoIssuesCard />;
+
   return (
     <Table.Root variant="surface">
       <Table.Header>

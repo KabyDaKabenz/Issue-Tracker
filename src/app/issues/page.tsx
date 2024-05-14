@@ -2,9 +2,10 @@ import Pagination from "@/components/Pagination";
 import prisma from "@_prisma/client";
 import { Status } from "@prisma/client";
 import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
+import { Suspense } from "react";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
 import IssueToolbar from "./IssueToolbar";
-import { Metadata } from "next";
 
 const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
   const validatePage = (page: string, pageCount: number): number => {
@@ -49,11 +50,13 @@ const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
       <IssueToolbar />
       <IssueTable searchParams={searchParams} issues={issues} />
       <Flex justify="center">
-        <Pagination
-          pageSize={PAGE_SIZE}
-          itemCount={issueCount}
-          currentPage={page}
-        />
+        <Suspense>
+          <Pagination
+            pageSize={PAGE_SIZE}
+            itemCount={issueCount}
+            currentPage={page}
+          />
+        </Suspense>
       </Flex>
     </Flex>
   );

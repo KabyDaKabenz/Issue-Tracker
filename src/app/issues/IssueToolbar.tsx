@@ -1,11 +1,20 @@
 import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
-import IssueStatusFilter from "./IssueStatusFilter";
+import IssueStatusFilterSkeleton from "./IssueStatusFilterSkeleton";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+const IssueStatusFilter = dynamic(() => import("./IssueStatusFilter"), {
+  ssr: false,
+  loading: () => <IssueStatusFilterSkeleton />,
+});
 
 const IssuesToolbar = () => {
   return (
     <Flex justify="between">
-      <IssueStatusFilter />
+      <Suspense>
+        <IssueStatusFilter />
+      </Suspense>
       <Button>
         <Link href="/issues/new">New Issue</Link>
       </Button>
