@@ -1,4 +1,17 @@
 -- CreateTable
+CREATE TABLE `Issue` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `status` ENUM('OPEN', 'IN_PROGRESS', 'CLOSED') NOT NULL DEFAULT 'OPEN',
+    `assignedToUserId` VARCHAR(255) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
@@ -20,7 +33,7 @@ CREATE TABLE `Account` (
     `userId` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
     `provider` VARCHAR(191) NOT NULL,
-    `providerAccountId` VARCHAR(191) NOT NULL,
+    `provider_account_id` VARCHAR(191) NOT NULL,
     `refresh_token` TEXT NULL,
     `access_token` TEXT NULL,
     `expires_at` INTEGER NULL,
@@ -34,7 +47,7 @@ CREATE TABLE `Account` (
 
     UNIQUE INDEX `Account_userId_key`(`userId`),
     INDEX `Account_userId_idx`(`userId`),
-    UNIQUE INDEX `Account_provider_providerAccountId_key`(`provider`, `providerAccountId`),
+    UNIQUE INDEX `Account_provider_provider_account_id_key`(`provider`, `provider_account_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -60,9 +73,3 @@ CREATE TABLE `VerificationToken` (
 
     UNIQUE INDEX `VerificationToken_identifier_token_key`(`identifier`, `token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `Account` ADD CONSTRAINT `Account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Session` ADD CONSTRAINT `Session_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
