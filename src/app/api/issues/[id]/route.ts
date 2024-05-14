@@ -52,6 +52,7 @@ export async function PATCH(
   });
 
   revalidatePath("/issues");
+  revalidatePath("/");
 
   return NextResponse.json(updatedIssue, { status: 200 });
 }
