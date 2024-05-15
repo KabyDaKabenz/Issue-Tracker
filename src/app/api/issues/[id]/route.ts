@@ -79,5 +79,7 @@ export async function DELETE(
     where: { id: issueToDelete.id },
   });
 
+  revalidatePath("/");
+
   return NextResponse.json(deletedIssue, { status: 200 });
 }
