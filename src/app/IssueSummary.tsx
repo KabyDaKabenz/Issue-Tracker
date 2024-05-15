@@ -2,6 +2,7 @@ import { Card, Flex, Text } from "@radix-ui/themes";
 import { Status } from "@prisma/client";
 import Link from "next/link";
 import { IssueStatusBadge } from "@/components";
+import classnames from "classnames";
 
 interface IssueSummaryProps {
   open: number;
@@ -24,7 +25,10 @@ const IssueSummary = ({ open, inProgress, closed }: IssueSummaryProps) => {
     <Flex gap="4">
       {containers.map((container) => (
         <Link
-          className="text-sm font-medium w-full"
+          className={classnames({
+            "text-sm font-medium w-full": true,
+            "pointer-events-none": container.value === 0,
+          })}
           href={`/issues?status=${container.status}`}
           key={container.label}
         >

@@ -18,7 +18,7 @@ interface IssueTableProps {
 }
 
 const IssueTable = ({ issues, searchParams }: IssueTableProps) => {
-  if (issues.length === 0) return <NoIssuesCard />;
+  if (issues.length === 0) return <NoIssuesCard status={searchParams.status} />;
 
   return (
     <Table.Root variant="surface">
