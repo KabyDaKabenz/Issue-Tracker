@@ -4,8 +4,14 @@ import classnames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
-import { useSession } from "next-auth/react";
-import { Avatar, DropdownMenu, Flex, Text } from "@radix-ui/themes";
+import { signIn, signOut, useSession } from "next-auth/react";
+import {
+  Avatar,
+  DropdownMenu,
+  Flex,
+  Text,
+  Link as StyleLink,
+} from "@radix-ui/themes";
 import Skeleton from "./Skeleton";
 
 const NavBar = () => {
@@ -61,9 +67,9 @@ const AuthStatus = () => {
 
   if (status === "unauthenticated")
     return (
-      <Link className="nav-link" href="/api/auth/signin">
+      <StyleLink className="nav-link" onClick={() => signIn()}>
         Login
-      </Link>
+      </StyleLink>
     );
 
   return (
@@ -82,9 +88,12 @@ const AuthStatus = () => {
           <DropdownMenu.Label>
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
-          <Link href="/api/auth/signout">
+          <StyleLink
+            className="text-gray-700"
+            onClick={() => signOut({ callbackUrl: "/" })}
+          >
             <DropdownMenu.Item>Log out</DropdownMenu.Item>
-          </Link>
+          </StyleLink>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </>
