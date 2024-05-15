@@ -47,7 +47,7 @@ const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
 
   return (
     <Flex direction="column" gap="3">
-      <IssueToolbar />
+      {issues.length > 0 && <IssueToolbar />}
       <IssueTable searchParams={searchParams} issues={issues} />
       <Flex justify="center">
         <Suspense>

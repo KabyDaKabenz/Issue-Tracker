@@ -1,8 +1,8 @@
-import { Button, Flex } from "@radix-ui/themes";
-import Link from "next/link";
-import IssueStatusFilterSkeleton from "./IssueStatusFilterSkeleton";
-import { Suspense } from "react";
+import AddIssueButton from "@/components/AddIssueButton";
+import { Flex } from "@radix-ui/themes";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import IssueStatusFilterSkeleton from "./IssueStatusFilterSkeleton";
 
 const IssueStatusFilter = dynamic(() => import("./IssueStatusFilter"), {
   ssr: false,
@@ -15,9 +15,7 @@ const IssuesToolbar = () => {
       <Suspense>
         <IssueStatusFilter />
       </Suspense>
-      <Button>
-        <Link href="/issues/new">New Issue</Link>
-      </Button>
+      <AddIssueButton />
     </Flex>
   );
 };
