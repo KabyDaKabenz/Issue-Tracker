@@ -7,6 +7,7 @@ import "./globals.css";
 import "./theme-config.css";
 import AuthProvider from "./auth/Provider";
 import QueryClientProvider from "@/QueryClientProvider";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -26,10 +27,13 @@ export default function RootLayout({
         <QueryClientProvider>
           <AuthProvider>
             <Theme accentColor="violet">
-              <NavBar />
-              <main className="p-5">
-                <Container>{children}</Container>
-              </main>
+              <div className="min-h-screen flex flex-col">
+                <NavBar />
+                <main className="p-5">
+                  <Container>{children}</Container>
+                </main>
+                <Footer />
+              </div>
             </Theme>
           </AuthProvider>
         </QueryClientProvider>
