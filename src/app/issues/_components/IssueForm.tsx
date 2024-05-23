@@ -46,15 +46,15 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
       <form
         className="space-y-3"
-        onSubmit={handleSubmit(async (data) => {
+        onSubmit={handleSubmit(async (issueData) => {
           try {
             setIsSubmitting(true);
-            if (issue) {
-              await axios.patch(`/api/issues/${issue.id}`, data);
-            } else {
-              await axios.post("/api/issues", data);
-            }
-            router.push("/issues");
+            // If issue is defined, then edit it, otherwise add it.
+            const { data } = issue
+              ? await axios.patch(`/api/issues/${issue.id}`, issueData)
+              : await axios.post("/api/issues", issueData);
+            const issueId = data.id;
+            router.push(`/issues/${issueId}`);
             router.refresh();
           } catch (error) {
             setIsSubmitting(false);

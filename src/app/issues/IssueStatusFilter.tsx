@@ -21,6 +21,11 @@ const statuses: { label: string; value?: Status }[] = [
     value: "CLOSED",
   },
 ];
+
+export const statusSelection = statuses.filter(
+  (status) => status.label !== "All"
+);
+
 const IssueStatusFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
