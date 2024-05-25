@@ -1,4 +1,4 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Button, Flex } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import prisma from "@_prisma/client";
 import EditIssueButton from "./EditIssueButton";
@@ -9,6 +9,7 @@ import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
 import { cache } from "react";
 import StatusSelect from "./StatusSelect";
+import Link from "next/link";
 
 interface IssueDetailProps {
   params: {
@@ -40,9 +41,16 @@ const IssueDetailPage = async ({ params }: IssueDetailProps) => {
             <AssigneeSelect issue={issue} />
             <StatusSelect issue={issue} />
           </Box>
-          <Box className="flex gap-4 mt-6 [&>*]:flex-1 md:[&>*]:flex-none">
-            <EditIssueButton issueId={issue.id} />
-            <DeleteIssueButton issueId={issue.id} />
+          <Box className="flex flex-col gap-4 md:flex-row md:justify-between">
+            <Box className="flex gap-4 [&>*]:flex-1 md:[&>*]:flex-none">
+              <EditIssueButton issueId={issue.id} />
+              <DeleteIssueButton issueId={issue.id} />
+            </Box>
+            <Link href="/issues" className="inline-block">
+              <Button variant="soft" className="w-full">
+                Back to Issues
+              </Button>
+            </Link>
           </Box>
         </>
       )}
