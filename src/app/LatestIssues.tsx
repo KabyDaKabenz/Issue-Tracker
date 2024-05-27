@@ -1,7 +1,15 @@
 import { IssueStatusBadge } from "@/components";
 import NoIssuesCard from "@/components/NoIssuesCard";
 import prisma from "@_prisma/client";
-import { Avatar, Card, Flex, Heading, Table } from "@radix-ui/themes";
+import {
+  Avatar,
+  Card,
+  Flex,
+  Heading,
+  HoverCard,
+  Table,
+  Text,
+} from "@radix-ui/themes";
 import Link from "next/link";
 
 const LatestIssues = async () => {
@@ -32,11 +40,18 @@ const LatestIssues = async () => {
                       <IssueStatusBadge status={issue.status} />
                     </Flex>
                     {issue.assignedToUser && (
-                      <Avatar
-                        src={issue.assignedToUser.image!}
-                        fallback="?"
-                        size="2"
-                      />
+                      <HoverCard.Root>
+                        <HoverCard.Trigger>
+                          <Avatar
+                            src={issue.assignedToUser.image!}
+                            fallback="?"
+                            size="2"
+                          />
+                        </HoverCard.Trigger>
+                        <HoverCard.Content size="1">
+                          <Text size="1">{issue.assignedToUser.name}</Text>
+                        </HoverCard.Content>
+                      </HoverCard.Root>
                     )}
                   </Flex>
                 </Table.Cell>
