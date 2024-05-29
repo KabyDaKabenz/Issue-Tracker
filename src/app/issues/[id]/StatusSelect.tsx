@@ -2,7 +2,7 @@
 
 import { Select, Flex, Text } from "@radix-ui/themes";
 import { Issue, Status } from "@prisma/client";
-import { statusSelection } from "../IssueStatusFilter";
+import { statusSelection } from "../(issuelist)/IssueStatusFilter";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
