@@ -4,6 +4,7 @@ import classnames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
   Avatar,
@@ -76,13 +77,15 @@ const AuthStatus = () => {
     <>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Avatar
-            src={session!.user!.image!}
-            fallback="?"
-            size="2"
-            radius="full"
-            className="cursor-pointer"
-          />
+          <Text>
+            <Avatar
+              src={session!.user!.image!}
+              fallback={<FaUser />}
+              size="2"
+              radius="full"
+              className="cursor-pointer"
+            />
+          </Text>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Label>
